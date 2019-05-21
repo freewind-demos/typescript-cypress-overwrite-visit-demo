@@ -10,10 +10,21 @@ function setupHello(win: Window) {
   })
 }
 
-Cypress.Commands.overwrite("visit", (visit: typeof cy.visit, url: string, options: Partial<Cypress.VisitOptions>) => {
-  console.log('### visit', visit, url, options);
+Cypress.Commands.overwrite("visit", (visit: typeof cy.visit, ...params: any) => {
+  let options: Partial<Cypress.VisitOptions> & { url: string };
+
+  if (params.length === 1) {
+    options = params[0];
+  } else {
+    const [url, _options] = params;
+    options = {
+      url,
+      ..._options
+    };
+  }
+
   const {onBeforeLoad, ...rest} = options;
-  return visit(url, {
+  return visit({
     ...rest,
     onBeforeLoad: (win) => {
       console.log('### onBeforeLoad')

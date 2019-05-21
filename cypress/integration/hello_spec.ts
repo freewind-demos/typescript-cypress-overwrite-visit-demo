@@ -12,6 +12,14 @@ describe('cypress', () => {
       }
     });
 
+    // cy.visit( {
+    //   url,
+    //   onBeforeLoad: (win: Window) => {
+    //     win.currentUrl = url;
+    //     console.log('### set current url')
+    //   }
+    // });
+
     cy.window().then(win => {
       console.log('### in cy.window()')
       expect(win.hello).to.equal('Hello, cypress!');
