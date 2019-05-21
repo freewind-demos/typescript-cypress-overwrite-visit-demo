@@ -13,7 +13,7 @@ function setupHello(win: Window) {
 Cypress.Commands.overwrite("visit", (visit: typeof cy.visit, url: string, options: Partial<Cypress.VisitOptions>) => {
   console.log('### visit', visit, url, options);
   const {onBeforeLoad, ...rest} = options;
-  visit(url, {
+  return visit(url, {
     ...rest,
     onBeforeLoad: (win) => {
       console.log('### onBeforeLoad')
